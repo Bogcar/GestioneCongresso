@@ -1,54 +1,45 @@
 <!DOCTYPE html>
 <html lang="it">
-
+	
 <head>
   <?php
   	define('DEEPNESS', '../');
    	require DEEPNESS."inc/head.php";
 	require DEEPNESS."inc/database.php";
-	$GLOBALS['page'] = "list";
+	$GLOBALS['page'] = "staff";
    ?>
 </head>
 <body>
-  <?php require "../inc/topbar.php"; ?>
-  <?php require "../inc/leftnavigation.php"; ?>
+	<?php require DEEPNESS."inc/topbar.php"; ?>
+    <?php require DEEPNESS."inc/leftnavigation.php"; ?>
   <!--main content start-->
   <section class="main-content container">
     <!--start page content-->
 	<div class="panel panel-default collapsed">
 		<div class="panel-heading">
-            Ordina - Filtra - Cerca
+            <?php echo STAFF_TITLE ?>
         </div>
 		<div class="panel-body">
 			<input type="text" class="form-control margin-b-10 input-sm" id="filter"  placeholder="Search in table">
 			<?php
-		
 				$connection=Database::getConnection();
-
-				if($result=$connection->query("select eticket, name, surname, sex, email, country, telephone, date_birth, parents_telephone from partecipants")
-				
-				) :
+				if($result=$connection->query("select id, name, surname, sex, email, telephone, state from counselors")) :
 			?>
     		<table class="footable table table-hover" data-page-size="100" data-filter=#filter>
         <thead>
         <tr>
-            <th>E-Ticket</th>
-            <th>Nome</th>
-            <th>Cognome</th>
-            <th>Sesso</th>
-            <th data-hide="phone, tablet">E-Mail</th>
-            <th data-hide="phone, tablet">Paese</th>
-            <th>Telefono</th>
-            <th data-hide="phone, tablet">Data di nascita</th>
-            <th data-hide="phone, tablet">Telefono tutori</th>
+            <th><?php echo STAFF_ID ?></th>
+            <th><?php echo STAFF_NAME ?></th>
+            <th><?php echo STAFF_SURNAME ?></th>
+            <th><?php echo STAFF_SEX ?></th>
+            <th data-hide="phone, tablet"><?php echo STAFF_MAIL ?></th>
+            <th><?php echo STAFF_PHONE ?></th>
+            <th><?php echo STAFF_STATE ?></th>
         </tr>
         </thead>
         <tbody>
-
 		<?php while ($row = $result->fetch_array(MYSQLI_NUM)): ?>
-
 	        <tr class="gradeX">
-
 				<td ><?php echo $row[0] ?></td>
 				<td ><?php echo $row[1] ?></td>
 				<td ><?php echo $row[2] ?></td>
@@ -56,12 +47,8 @@
 				<td ><?php echo $row[4] ?></td>
 				<td ><?php echo $row[5] ?></td>
 				<td ><?php echo $row[6] ?></td>
-				<td ><?php echo $row[7] ?></td>
-				<td ><?php echo $row[8] ?></td>
 	        </tr>
-
 			<?php endwhile; ?>
-
 		</tbody>
         <tfoot>
         <tr>
